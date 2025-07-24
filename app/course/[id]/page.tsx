@@ -21,6 +21,13 @@ import {
   Video,
 } from "lucide-react"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
 
 // Define metadata for the page
 export const metadata: Metadata = {
@@ -529,37 +536,42 @@ export default async function CoursePage({ params }: { params: { id: string } })
           <div className="sticky top-24">
             <div className="bg-white rounded-lg overflow-hidden">
               {/* Main Carousel Image */}
-              <div className="relative aspect-video">
-                <Image
-                  src="/images/reference.png"
-                  alt="IELTS Course Preview"
-                  fill
-                  className="object-cover"
-                  priority
-                />
-                {/* Navigation Arrows */}
-                <button className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/80 rounded-full flex items-center justify-center z-10">
-                  <ChevronRight className="h-5 w-5 rotate-180" />
-                </button>
-                <button className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/80 rounded-full flex items-center justify-center z-10">
-                  <ChevronRight className="h-5 w-5" />
-                </button>
-              </div>
+              <Carousel className="w-full">
+                <CarouselContent>
+                  {[1, 2, 3, 4, 5, 6].map((i) => (
+                    <CarouselItem key={i}>
+                      <div className="relative aspect-video">
+                        <Image
+                          src="/images/reference.png"
+                          alt={`IELTS Course Preview ${i}`}
+                          fill
+                          className="object-cover"
+                          priority={i === 1}
+                        />
+                      </div>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/80 rounded-full" />
+                <CarouselNext className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/80 rounded-full" />
+              </Carousel>
 
               {/* Thumbnail Strip */}
-              <div className="flex gap-2 p-2 bg-white border-b">
+              <div className="flex gap-2 p-2 bg-white border-b overflow-x-auto">
                 {[1, 2, 3, 4, 5, 6].map((i) => (
-                  <div
+                  <button
                     key={i}
-                    className={`relative w-[60px] h-[45px] rounded overflow-hidden cursor-pointer ${i === 1 ? 'ring-2 ring-green-500' : ''}`}
+                    className={`relative w-[60px] h-[45px] rounded overflow-hidden cursor-pointer flex-shrink-0 ${
+                      i === 1 ? 'ring-2 ring-green-500' : ''
+                    }`}
                   >
                     <Image
-                      src={`/images/reference.png`}
+                      src="/images/reference.png"
                       alt={`Preview ${i}`}
                       fill
                       className="object-cover"
                     />
-                  </div>
+                  </button>
                 ))}
               </div>
 
@@ -581,51 +593,105 @@ export default async function CoursePage({ params }: { params: { id: string } })
 
                 {/* Course Features */}
                 <div>
-                  <h3 className="font-medium mb-4">এই কোর্সে যা থাকছে</h3>
-                  <div className="space-y-3">
+                  <h3 className="text-[15px] font-medium mb-5">এই কোর্সে যা থাকছে</h3>
+                  <div className="space-y-[14px]">
                     <div className="flex items-center gap-3">
-                      <Users className="h-5 w-5 text-gray-600" />
-                      <span className="text-gray-700">Total Enrolled 32995</span>
+                      <div className="w-5 opacity-70">
+                        <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M12 12.75C8.83 12.75 6.25 10.17 6.25 7C6.25 3.83 8.83 1.25 12 1.25C15.17 1.25 17.75 3.83 17.75 7C17.75 10.17 15.17 12.75 12 12.75ZM12 2.75C9.66 2.75 7.75 4.66 7.75 7C7.75 9.34 9.66 11.25 12 11.25C14.34 11.25 16.25 9.34 16.25 7C16.25 4.66 14.34 2.75 12 2.75Z" fill="#292D32"/>
+                          <path d="M20.5901 22.75C20.1801 22.75 19.8401 22.41 19.8401 22C19.8401 18.55 16.3202 15.75 12.0002 15.75C7.68015 15.75 4.16016 18.55 4.16016 22C4.16016 22.41 3.82016 22.75 3.41016 22.75C3.00016 22.75 2.66016 22.41 2.66016 22C2.66016 17.73 6.85015 14.25 12.0002 14.25C17.1502 14.25 21.3401 17.73 21.3401 22C21.3401 22.41 21.0001 22.75 20.5901 22.75Z" fill="#292D32"/>
+                        </svg>
+                      </div>
+                      <span className="text-[15px] text-gray-700">Total Enrolled 32995</span>
                     </div>
                     <div className="flex items-center gap-3">
-                      <Clock className="h-5 w-5 text-gray-600" />
-                      <span className="text-gray-700">Time Required 50 hours</span>
+                      <div className="w-5 opacity-70">
+                        <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M12 22.75C6.07 22.75 1.25 17.93 1.25 12C1.25 6.07 6.07 1.25 12 1.25C17.93 1.25 22.75 6.07 22.75 12C22.75 17.93 17.93 22.75 12 22.75ZM12 2.75C6.9 2.75 2.75 6.9 2.75 12C2.75 17.1 6.9 21.25 12 21.25C17.1 21.25 21.25 17.1 21.25 12C21.25 6.9 17.1 2.75 12 2.75Z" fill="#292D32"/>
+                          <path d="M15.7099 15.93C15.5799 15.93 15.4499 15.9 15.3299 15.82L12.2299 13.97C11.4599 13.51 10.8899 12.5 10.8899 11.61V7.51001C10.8899 7.10001 11.2299 6.76001 11.6399 6.76001C12.0499 6.76001 12.3899 7.10001 12.3899 7.51001V11.61C12.3899 11.97 12.6999 12.5 13.0199 12.68L16.1199 14.53C16.4799 14.74 16.5999 15.2 16.3899 15.56C16.2399 15.8 15.9799 15.93 15.7099 15.93Z" fill="#292D32"/>
+                        </svg>
+                      </div>
+                      <span className="text-[15px] text-gray-700">Time Required 50 hours</span>
                     </div>
                     <div className="flex items-center gap-3">
-                      <Video className="h-5 w-5 text-gray-600" />
-                      <span className="text-gray-700">54 Videos</span>
+                      <div className="w-5 opacity-70">
+                        <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M21.75 8.39999V15.6C21.75 15.62 21.75 15.63 21.75 15.65C21.75 16.21 21.62 16.68 21.39 17.08C21.21 17.39 20.94 17.66 20.6 17.89C20.24 18.13 19.81 18.3 19.35 18.39C19.22 18.42 19.09 18.44 18.95 18.45C18.92 18.45 18.89 18.46 18.86 18.46H5.14C5.11 18.46 5.08 18.46 5.05 18.45C4.91 18.44 4.78 18.42 4.65 18.39C4.19 18.3 3.76 18.13 3.4 17.89C3.06 17.66 2.79 17.39 2.61 17.08C2.38 16.68 2.25 16.21 2.25 15.65C2.25 15.63 2.25 15.62 2.25 15.6V8.39999C2.25 8.37999 2.25 8.36999 2.25 8.34999C2.25 7.78999 2.38 7.31999 2.61 6.91999C2.79 6.60999 3.06 6.33999 3.4 6.10999C3.76 5.86999 4.19 5.69999 4.65 5.60999C4.78 5.57999 4.91 5.55999 5.05 5.54999C5.08 5.54999 5.11 5.53999 5.14 5.53999H18.86C18.89 5.53999 18.92 5.54999 18.95 5.54999C19.09 5.55999 19.22 5.57999 19.35 5.60999C19.81 5.69999 20.24 5.86999 20.6 6.10999C20.94 6.33999 21.21 6.60999 21.39 6.91999C21.62 7.31999 21.75 7.78999 21.75 8.34999C21.75 8.36999 21.75 8.37999 21.75 8.39999Z" stroke="#292D32" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </div>
+                      <span className="text-[15px] text-gray-700">54 Videos</span>
                     </div>
                     <div className="flex items-center gap-3">
-                      <BookOpen className="h-5 w-5 text-gray-600" />
-                      <span className="text-gray-700">10 Reading & 10 Listening Mocktests</span>
+                      <div className="w-5 opacity-70">
+                        <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M21 7V17C21 20 19.5 22 16 22H8C4.5 22 3 20 3 17V7C3 4 4.5 2 8 2H16C19.5 2 21 4 21 7Z" stroke="#292D32" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+                          <path d="M14.5 4.5V6.5C14.5 7.6 15.4 8.5 16.5 8.5H18.5" stroke="#292D32" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+                          <path d="M8 13H12" stroke="#292D32" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+                          <path d="M8 17H16" stroke="#292D32" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </div>
+                      <span className="text-[15px] text-gray-700">10 Reading & 10 Listening Mocktests</span>
                     </div>
                     <div className="flex items-center gap-3">
-                      <FileText className="h-5 w-5 text-gray-600" />
-                      <span className="text-gray-700">38 Lecture Sheets</span>
+                      <div className="w-5 opacity-70">
+                        <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M21 7V17C21 20 19.5 22 16 22H8C4.5 22 3 20 3 17V7C3 4 4.5 2 8 2H16C19.5 2 21 4 21 7Z" stroke="#292D32" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+                          <path d="M14.5 4.5V6.5C14.5 7.6 15.4 8.5 16.5 8.5H18.5" stroke="#292D32" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+                          <path d="M8 13H12" stroke="#292D32" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+                          <path d="M8 17H16" stroke="#292D32" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </div>
+                      <span className="text-[15px] text-gray-700">38 Lecture Sheets</span>
                     </div>
                     <div className="flex items-center gap-3">
-                      <Video className="h-5 w-5 text-gray-600" />
-                      <span className="text-gray-700">25 Video Lectures</span>
+                      <div className="w-5 opacity-70">
+                        <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M21.75 8.39999V15.6C21.75 15.62 21.75 15.63 21.75 15.65C21.75 16.21 21.62 16.68 21.39 17.08C21.21 17.39 20.94 17.66 20.6 17.89C20.24 18.13 19.81 18.3 19.35 18.39C19.22 18.42 19.09 18.44 18.95 18.45C18.92 18.45 18.89 18.46 18.86 18.46H5.14C5.11 18.46 5.08 18.46 5.05 18.45C4.91 18.44 4.78 18.42 4.65 18.39C4.19 18.3 3.76 18.13 3.4 17.89C3.06 17.66 2.79 17.39 2.61 17.08C2.38 16.68 2.25 16.21 2.25 15.65C2.25 15.63 2.25 15.62 2.25 15.6V8.39999C2.25 8.37999 2.25 8.36999 2.25 8.34999C2.25 7.78999 2.38 7.31999 2.61 6.91999C2.79 6.60999 3.06 6.33999 3.4 6.10999C3.76 5.86999 4.19 5.69999 4.65 5.60999C4.78 5.57999 4.91 5.55999 5.05 5.54999C5.08 5.54999 5.11 5.53999 5.14 5.53999H18.86C18.89 5.53999 18.92 5.54999 18.95 5.54999C19.09 5.55999 19.22 5.57999 19.35 5.60999C19.81 5.69999 20.24 5.86999 20.6 6.10999C20.94 6.33999 21.21 6.60999 21.39 6.91999C21.62 7.31999 21.75 7.78999 21.75 8.34999C21.75 8.36999 21.75 8.37999 21.75 8.39999Z" stroke="#292D32" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </div>
+                      <span className="text-[15px] text-gray-700">25 Video Lectures</span>
                     </div>
                     <div className="flex items-center gap-3">
-                      <Download className="h-5 w-5 text-gray-600" />
-                      <span className="text-gray-700">1 Free Hardcopy Book Delivered</span>
+                      <div className="w-5 opacity-70">
+                        <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M22 16.7399V4.66994C22 3.46994 21.02 2.57994 19.83 2.67994H19.77C17.67 2.85994 14.48 3.92994 12.7 5.04994L12.53 5.15994C12.24 5.33994 11.76 5.33994 11.47 5.15994L11.22 5.00994C9.44 3.89994 6.26 2.83994 4.16 2.66994C2.97 2.56994 2 3.46994 2 4.65994V16.7399C2 17.6999 2.78 18.5999 3.74 18.7199L4.03 18.7599C6.2 19.0499 9.55 20.1499 11.47 21.1999L11.51 21.2199C11.78 21.3699 12.21 21.3699 12.47 21.2199C14.39 20.1599 17.75 19.0499 19.93 18.7599L20.26 18.7199C21.22 18.5999 22 17.6999 22 16.7399Z" stroke="#292D32" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                          <path d="M12 5.48999V20.49" stroke="#292D32" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                          <path d="M7.75 8.48999H5.5" stroke="#292D32" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                          <path d="M8.5 11.49H5.5" stroke="#292D32" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </div>
+                      <span className="text-[15px] text-gray-700">1 Free Hardcopy Book Delivered</span>
                     </div>
                     <div className="flex items-center gap-3">
-                      <Users className="h-5 w-5 text-gray-600" />
-                      <span className="text-gray-700">Facebook Support Group</span>
+                      <div className="w-5 opacity-70">
+                        <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M12 12.75C8.83 12.75 6.25 10.17 6.25 7C6.25 3.83 8.83 1.25 12 1.25C15.17 1.25 17.75 3.83 17.75 7C17.75 10.17 15.17 12.75 12 12.75ZM12 2.75C9.66 2.75 7.75 4.66 7.75 7C7.75 9.34 9.66 11.25 12 11.25C14.34 11.25 16.25 9.34 16.25 7C16.25 4.66 14.34 2.75 12 2.75Z" fill="#292D32"/>
+                          <path d="M20.5901 22.75C20.1801 22.75 19.8401 22.41 19.8401 22C19.8401 18.55 16.3202 15.75 12.0002 15.75C7.68015 15.75 4.16016 18.55 4.16016 22C4.16016 22.41 3.82016 22.75 3.41016 22.75C3.00016 22.75 2.66016 22.41 2.66016 22C2.66016 17.73 6.85015 14.25 12.0002 14.25C17.1502 14.25 21.3401 17.73 21.3401 22C21.3401 22.41 21.0001 22.75 20.5901 22.75Z" fill="#292D32"/>
+                        </svg>
+                      </div>
+                      <span className="text-[15px] text-gray-700">Facebook Support Group</span>
                     </div>
                     <div className="flex items-center gap-3">
-                      <Clock className="h-5 w-5 text-gray-600" />
-                      <span className="text-gray-700">Course Validity Lifetime</span>
+                      <div className="w-5 opacity-70">
+                        <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M12 22.75C6.07 22.75 1.25 17.93 1.25 12C1.25 6.07 6.07 1.25 12 1.25C17.93 1.25 22.75 6.07 22.75 12C22.75 17.93 17.93 22.75 12 22.75ZM12 2.75C6.9 2.75 2.75 6.9 2.75 12C2.75 17.1 6.9 21.25 12 21.25C17.1 21.25 21.25 17.1 21.25 12C21.25 6.9 17.1 2.75 12 2.75Z" fill="#292D32"/>
+                          <path d="M15.7099 15.93C15.5799 15.93 15.4499 15.9 15.3299 15.82L12.2299 13.97C11.4599 13.51 10.8899 12.5 10.8899 11.61V7.51001C10.8899 7.10001 11.2299 6.76001 11.6399 6.76001C12.0499 6.76001 12.3899 7.10001 12.3899 7.51001V11.61C12.3899 11.97 12.6999 12.5 13.0199 12.68L16.1199 14.53C16.4799 14.74 16.5999 15.2 16.3899 15.56C16.2399 15.8 15.9799 15.93 15.7099 15.93Z" fill="#292D32"/>
+                        </svg>
+                      </div>
+                      <span className="text-[15px] text-gray-700">Course Validity Lifetime</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Contact Info */}
-                <div className="mt-6 text-center">
-                  <p className="text-gray-600 mb-1">কোর্সটি সম্পর্কে বিস্তারিত জানতে</p>
-                  <a href="tel:16910" className="text-green-600 font-medium">�� ফোন করুন (16910)</a>
+                <div className="mt-6 text-center border-t pt-4">
+                  <p className="text-[15px] text-gray-600 mb-2">কোর্সটি সম্পর্কে বিস্তারিত জানতে</p>
+                  <a href="tel:16910" className="text-green-600 hover:text-green-700 font-medium inline-flex items-center gap-1">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-green-600">
+                      <path d="M21.97 18.33C21.97 18.69 21.89 19.06 21.72 19.42C21.55 19.78 21.33 20.12 21.04 20.44C20.55 20.98 20.01 21.37 19.4 21.62C18.8 21.87 18.15 22 17.45 22C16.43 22 15.34 21.76 14.19 21.27C13.04 20.78 11.89 20.12 10.75 19.29C9.6 18.45 8.51 17.52 7.47 16.49C6.44 15.45 5.51 14.36 4.68 13.22C3.86 12.08 3.2 10.94 2.72 9.81C2.24 8.67 2 7.58 2 6.54C2 5.86 2.12 5.21 2.36 4.61C2.6 4 2.98 3.44 3.51 2.94C4.15 2.31 4.85 2 5.59 2C5.87 2 6.15 2.06 6.4 2.18C6.66 2.3 6.89 2.48 7.07 2.74L9.39 6.01C9.57 6.26 9.7 6.49 9.79 6.71C9.88 6.92 9.93 7.13 9.93 7.32C9.93 7.56 9.86 7.8 9.72 8.03C9.59 8.26 9.4 8.5 9.16 8.74L8.4 9.53C8.29 9.64 8.24 9.77 8.24 9.93C8.24 10.01 8.25 10.08 8.27 10.16C8.3 10.24 8.33 10.3 8.35 10.36C8.53 10.69 8.84 11.12 9.28 11.64C9.73 12.16 10.21 12.69 10.73 13.22C11.27 13.75 11.79 14.24 12.32 14.69C12.84 15.13 13.27 15.43 13.61 15.61C13.66 15.63 13.72 15.66 13.79 15.69C13.87 15.72 13.95 15.73 14.04 15.73C14.21 15.73 14.34 15.67 14.45 15.56L15.21 14.81C15.46 14.56 15.7 14.37 15.93 14.25C16.16 14.11 16.39 14.04 16.64 14.04C16.83 14.04 17.03 14.08 17.25 14.17C17.47 14.26 17.7 14.39 17.95 14.56L21.26 16.91C21.52 17.09 21.7 17.31 21.81 17.55C21.91 17.8 21.97 18.05 21.97 18.33Z" stroke="currentColor" strokeWidth="1.5" strokeMiterlimit="10"/>
+                    </svg>
+                    ফোন করুন (16910)
+                  </a>
                 </div>
               </div>
             </div>
