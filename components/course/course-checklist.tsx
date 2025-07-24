@@ -1,32 +1,24 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { CheckCircle, X } from "lucide-react"
-import type { ChecklistItem } from "@/types/course"
+import { CheckCircle } from 'lucide-react'
+import { Checklist } from '@/types/course'
 
 interface CourseChecklistProps {
-  checklist: ChecklistItem[]
-  title?: string
+  checklist: Checklist
 }
 
-export function CourseChecklist({ checklist, title = "This Course Includes" }: CourseChecklistProps) {
+export function CourseChecklist({ checklist }: CourseChecklistProps) {
   return (
-    <Card className="w-full">
-      <CardHeader>
-        <CardTitle className="text-lg">{title}</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-3">
-          {checklist.map((item) => (
-            <div key={item.id} className="flex items-center space-x-3">
-              {item.included ? (
-                <CheckCircle className="h-4 w-4 text-green-500 flex-shrink-0" />
-              ) : (
-                <X className="h-4 w-4 text-red-500 flex-shrink-0" />
-              )}
-              <span className={`text-sm ${item.included ? "text-gray-700" : "text-gray-500"}`}>{item.text}</span>
+    <div className="bg-white rounded-lg border p-6 shadow-sm">
+      <h3 className="text-xl font-semibold text-gray-900 mb-4">{checklist.title}</h3>
+      <div className="space-y-4">
+        {checklist.items.map((item, index) => (
+          <div key={index} className="flex items-start gap-3">
+            <div className="text-green-500 flex-shrink-0 mt-1">
+              <CheckCircle className="h-5 w-5" />
             </div>
-          ))}
-        </div>
-      </CardContent>
-    </Card>
+            <span className="text-gray-700">{item}</span>
+          </div>
+        ))}
+      </div>
+    </div>
   )
 }

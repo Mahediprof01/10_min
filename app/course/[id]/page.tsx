@@ -1,3 +1,4 @@
+import { CourseData } from "@/types/course"
 import { Logo } from "@/components/ui/logo"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -30,30 +31,55 @@ import {
 } from "@/components/ui/carousel"
 
 // Define metadata for the page
-export const metadata: Metadata = {
-  title: 'IELTS Course by Munzereen Shahid | 10 Minute School',
-  description: 'Get complete preparation of Academic IELTS and General Training IELTS in one course! Join our IELTS Course today to achieve your desired band score.',
-  openGraph: {
-    title: 'IELTS Course by Munzereen Shahid',
-    description: 'Complete IELTS preparation course with Academic and General Training modules',
-    images: ['/placeholder.jpg'],
-  },
+export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
+  const courseData = await getCourseData(params.id)
+  
+  return {
+    title: courseData.seo?.title || courseData.title,
+    description: courseData.seo?.description || courseData.description,
+    openGraph: {
+      title: courseData.seo?.title || courseData.title,
+      description: courseData.seo?.description || courseData.description,
+      images: [courseData.seo?.ogImage || '/placeholder.jpg'],
+    },
+  }
 }
 
-// Course data could be fetched from an API
-async function getCourseData(id: string) {
-  // This would typically be an API call
-  return {
-    title: "IELTS Course by Munzereen Shahid",
-    rating: 4.9,
-    reviews: "62.2k+",
-    description: "Get complete preparation of Academic IELTS and General Training IELTS in one course!",
-    // ... other course data
+// Course data fetching with ISR
+async function getCourseData(id: string): Promise<CourseData> {
+  try {
+    const res = await fetch(`${process.env.API_URL}/courses/${id}`, {
+      headers: {
+        'X-TENMS-SOURCE-PLATFORM': 'web'
+      },
+      next: {
+        revalidate: 3600 // Revalidate every hour
+      }
+    })
+    
+    if (!res.ok) {
+      throw new Error('Failed to fetch course data')
+    }
+
+    return res.json()
+  } catch (error) {
+    // Fallback data for development/error cases
+    return {
+      id,
+      title: "IELTS Course by Munzereen Shahid",
+      rating: 4.9,
+      reviews: "62.2k+",
+      description: "Get complete preparation of Academic IELTS and General Training IELTS in one course!",
+      price: 1000,
+      cta_text: "Enroll Now",
+      sections: [],
+      media: [],
+      checklist: { title: "", items: [] }
+    }
   }
 }
 
 export default async function CoursePage({ params }: { params: { id: string } }) {
-  // Fetch course data
   const courseData = await getCourseData(params.id)
 
   return (

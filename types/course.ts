@@ -1,47 +1,46 @@
-export interface CourseData {
-  id: string
-  title: string
-  description: string
-  price: number
-  cta_text: string
-  media: {
-    trailer_url: string
-    thumbnail: string
-  }
-  sections: Section[]
-  checklist: ChecklistItem[]
-  seo: SEOData
+export interface Instructor {
+  name: string;
+  image: string;
+  qualifications: string[];
+  description?: string;
 }
 
 export interface Section {
-  id: string
-  type: "instructor" | "features" | "pointers" | "about"
-  title: string
-  content: any
+  type: 'instructor' | 'features' | 'pointers' | 'about';
+  title: string;
+  content: string | string[];
 }
 
-export interface ChecklistItem {
-  id: string
-  text: string
-  included: boolean
+export interface Media {
+  type: 'youtube';
+  url: string;
+  thumbnail?: string;
+}
+
+export interface Checklist {
+  title: string;
+  items: string[];
 }
 
 export interface SEOData {
-  title: string
-  description: string
-  keywords: string[]
-  og_image: string
+  title: string;
+  description: string;
+  keywords: string[];
+  ogImage: string;
 }
 
-export interface Instructor {
-  id: string
-  name: string
-  title: string
-  avatar: string
-  rating: number
-  students: number
-  courses: number
-  bio: string
+export interface CourseData {
+  id: string;
+  title: string;
+  description: string;
+  price: number;
+  cta_text: string;
+  sections: Section[];
+  media: Media[];
+  checklist: Checklist;
+  seo?: SEOData;
+  rating?: number;
+  reviews?: string;
 }
 
 export interface Feature {
