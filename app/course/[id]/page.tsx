@@ -6,6 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Card, CardContent } from "@/components/ui/card"
 import Image from "next/image"
 import { Metadata } from "next"
+import { CourseCarousel } from "@/components/course/course-carousel"
 import {
   Star,
   Play,
@@ -22,13 +23,6 @@ import {
   Video,
 } from "lucide-react"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel"
 
 // Define metadata for the page
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
@@ -173,7 +167,7 @@ export default async function CoursePage({ params }: { params: { id: string } })
             {/* Course Instructor */}
             <section>
               <h2 className="text-2xl font-bold text-gray-900 mb-6">Course instructor</h2>
-              <Card className="border-0 shadow-sm">
+              <Card className="border-0 shadow-sm rounded-lg border ">
                 <CardContent className="p-6">
                   <div className="flex items-start space-x-4">
                     <Avatar className="h-16 w-16">
@@ -296,7 +290,7 @@ export default async function CoursePage({ params }: { params: { id: string } })
 
             {/* What you will learn */}
             <section>
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">What you will learn by doing the course</h2>
+              <h3 className="text-2xl font-bold text-gray-900 mb-6">What you will learn by doing the course</h3>
               <div className="bg-white rounded-lg border p-6 shadow-sm">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-6">
                   <div className="flex items-start gap-3">
@@ -559,47 +553,9 @@ export default async function CoursePage({ params }: { params: { id: string } })
           </div>
 
           {/* Right Sidebar */}
-          <div className="sticky top-24">
-            <div className="bg-white rounded-lg overflow-hidden">
-              {/* Main Carousel Image */}
-              <Carousel className="w-full">
-                <CarouselContent>
-                  {[1, 2, 3, 4, 5, 6].map((i) => (
-                    <CarouselItem key={i}>
-                      <div className="relative aspect-video">
-                        <Image
-                          src="/images/reference.png"
-                          alt={`IELTS Course Preview ${i}`}
-                          fill
-                          className="object-cover"
-                          priority={i === 1}
-                        />
-                      </div>
-                    </CarouselItem>
-                  ))}
-                </CarouselContent>
-                <CarouselPrevious className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/80 rounded-full" />
-                <CarouselNext className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/80 rounded-full" />
-              </Carousel>
-
-              {/* Thumbnail Strip */}
-              <div className="flex gap-2 p-2 bg-white border-b overflow-x-auto">
-                {[1, 2, 3, 4, 5, 6].map((i) => (
-                  <button
-                    key={i}
-                    className={`relative w-[60px] h-[45px] rounded overflow-hidden cursor-pointer flex-shrink-0 ${
-                      i === 1 ? 'ring-2 ring-green-500' : ''
-                    }`}
-                  >
-                    <Image
-                      src="/images/reference.png"
-                      alt={`Preview ${i}`}
-                      fill
-                      className="object-cover"
-                    />
-                  </button>
-                ))}
-              </div>
+          <div className="sticky relative -top-100 z-30">
+            <div className="bg-white rounded-lg overflow-hidden shadow-lg border">
+              <CourseCarousel />
 
               {/* Price and Enrollment Section */}
               <div className="p-4">
@@ -722,6 +678,7 @@ export default async function CoursePage({ params }: { params: { id: string } })
               </div>
             </div>
           </div>
+          
         </div>
 
       </main>
