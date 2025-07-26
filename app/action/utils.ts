@@ -88,4 +88,14 @@ export function getCourseFeatureExplanations(sections: CourseData['sections']) {
 export function getCourseGroupJoinEngagement(sections: CourseData['sections']) {
   const groupJoinSection = sections.find(section => section.type === 'group_join_engagement')
   return groupJoinSection?.values || []
+}
+
+/**
+ * Gets course about information from sections
+ * @param sections - Course sections array
+ * @returns AboutValue[]
+ */
+export function getCourseAbout(sections: CourseData['sections']) {
+  const aboutSection = sections.find(section => section.type === 'about')
+  return aboutSection?.values || []
 } 

@@ -31,9 +31,9 @@ export function CoursePageContent() {
     features: { getFormattedFeatures, hasFeatures },
     learningPoints: { getFormattedLearningPoints, hasLearningPoints },
     testimonials: { getFormattedTestimonials, hasTestimonials },
-    faqs: { getFormattedFaqs, toggleFaq, hasFaqs },
     featureExplanations: { getFormattedFeatureExplanations, hasFeatureExplanations },
     groupJoinEngagement: { getFormattedGroupJoinEngagement, hasGroupJoinEngagement },
+    about: { getFormattedAbout, hasAbout },
     checklist: { getFormattedChecklist },
     media: { getPreviewGallery, getThumbnail },
     pricing: { currentPrice, originalPrice, discountAmount, discountPercentage }
@@ -80,7 +80,7 @@ export function CoursePageContent() {
   const instructorInfo = getInstructorInfo
   const features = getFormattedFeatures
   const learningPoints = getFormattedLearningPoints
-  const faqs = getFormattedFaqs
+  const aboutItems = getFormattedAbout
   const checklist = getFormattedChecklist()
 
   return (
@@ -328,7 +328,7 @@ export function CoursePageContent() {
             )}
 
             {/* Content preview */}
-            <section id="content-preview">
+            {/* <section id="content-preview">
               <h2 className="text-2xl font-bold text-gray-900 mb-6">Content preview</h2>
               <Accordion type="single" collapsible className="space-y-2">
                 {courseData?.sections?.filter(section => section.name || section.description).map((section, index) => (
@@ -355,7 +355,7 @@ export function CoursePageContent() {
                   </AccordionItem>
                 )}
               </Accordion>
-            </section>
+            </section> */}
 
            
             {/* Course Exclusive Feature */}
@@ -401,19 +401,50 @@ export function CoursePageContent() {
 
 
              {/* Course details */}
-             {hasFaqs && faqs.length > 0 && (
+             {(() => {
+               console.log('=== COURSE DETAILS SECTION DEBUG ===');
+               
+               // Check what sections are available in courseData
+               console.log('=== AVAILABLE SECTIONS DEBUG ===');
+               console.log('courseData.sections:', courseData?.sections?.map(section => ({
+                 type: section.type,
+                 name: section.name,
+                 valuesCount: section.values?.length,
+                 order_idx: section.order_idx
+               })));
+               
+               // Check specifically for about section (Course details)
+               const aboutSection = courseData?.sections?.find(section => section.type === 'about');
+               console.log('About section found:', !!aboutSection);
+               console.log('About section data:', aboutSection);
+               console.log('About section values:', aboutSection?.values);
+               console.log('About section values detailed:', JSON.stringify(aboutSection?.values, null, 2));
+               
+               // Check formatted about data
+               console.log('hasAbout:', hasAbout);
+               console.log('aboutItems:', aboutItems);
+               console.log('aboutItems.length:', aboutItems?.length);
+               console.log('Formatted about data:', JSON.stringify(aboutItems, null, 2));
+               
+               console.log('=====================================');
+               return null;
+             })()}
+             {hasAbout && aboutItems.length > 0 && (
                <section id="course-details">
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">Course details</h2>
                 <Accordion type="single" collapsible className="space-y-2">
-                  {faqs.map((faq) => (
-                    <AccordionItem key={faq.id} value={faq.id} className="border-0">
+                  {aboutItems.map((item) => (
+                    <AccordionItem key={item.id} value={item.id} className="border-0">
                       <AccordionTrigger className="flex items-center justify-between w-full p-4 bg-gray-50 hover:bg-gray-100 rounded-lg">
-                        <span className="font-medium" dangerouslySetInnerHTML={{ __html: faq.question }} />
+                        <span 
+                          className="font-medium text-left" 
+                          dangerouslySetInnerHTML={{ __html: item.title }} 
+                        />
                       </AccordionTrigger>
                       <AccordionContent className="p-4 border-l-2 border-gray-200 ml-4">
                         <div 
                           className="text-gray-600"
-                          dangerouslySetInnerHTML={{ __html: faq.answer }}
+                          dangerouslySetInnerHTML={{ __html: item.description }}
                         />
                       </AccordionContent>
                     </AccordionItem>

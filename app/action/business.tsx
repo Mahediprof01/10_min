@@ -1,8 +1,8 @@
 'use client'
 
 import React, { useEffect, useState, useCallback, useMemo } from 'react'
-import { useCourse, useCourseInstructor, useCourseFeatures, useCourseLearningPoints, useCourseTestimonials, useCourseFaqs, useCourseFeatureExplanations, useCourseGroupJoinEngagement, useCourseChecklist, useCourseChecklistVisible, useCourseMedia, useCourseVideoMedia, useCourseImageMedia } from './store'
-import type { CourseData, InstructorValue, FeatureValue, PointerValue, TestimonialValue, FaqValue, FeatureExplanationValue, GroupJoinValue, Checklist, Medium } from './type'
+import { useCourse, useCourseInstructor, useCourseFeatures, useCourseLearningPoints, useCourseTestimonials, useCourseFaqs, useCourseFeatureExplanations, useCourseGroupJoinEngagement, useCourseAbout, useCourseChecklist, useCourseChecklistVisible, useCourseMedia, useCourseVideoMedia, useCourseImageMedia } from './store'
+import type { CourseData, InstructorValue, FeatureValue, PointerValue, TestimonialValue, FaqValue, FeatureExplanationValue, GroupJoinValue, AboutValue, Checklist, Medium } from './type'
 
 // Course Data Provider Component
 export function CourseDataProvider({ 
@@ -298,6 +298,30 @@ export function useCourseGroupJoinEngagementLogic() {
   }
 }
 
+// Course About Business Logic
+export function useCourseAboutLogic() {
+  const about = useCourseAbout() as AboutValue[]
+
+  const getFormattedAbout = useMemo(() => {
+    return about.map(aboutItem => ({
+      id: aboutItem.id,
+      title: aboutItem.title,
+      description: aboutItem.description,
+      icon: aboutItem.icon,
+    }))
+  }, [about])
+
+  const hasAbout = useMemo(() => about.length > 0, [about.length])
+  const aboutCount = useMemo(() => about.length, [about.length])
+
+  return {
+    about,
+    getFormattedAbout,
+    hasAbout,
+    aboutCount,
+  }
+}
+
 // Course Checklist Business Logic
 export function useCourseChecklistLogic() {
   const checklist = useCourseChecklist()
@@ -467,6 +491,7 @@ export function useCourseBusinessLogic() {
   const faqs = useCourseFaqsLogic()
   const featureExplanations = useCourseFeatureExplanationsLogic()
   const groupJoinEngagement = useCourseGroupJoinEngagementLogic()
+  const about = useCourseAboutLogic()
   const checklist = useCourseChecklistLogic()
   const media = useCourseMediaLogic()
   const seo = useCourseSeoLogic()
@@ -481,6 +506,7 @@ export function useCourseBusinessLogic() {
     faqs,
     featureExplanations,
     groupJoinEngagement,
+    about,
     checklist,
     media,
     seo,
