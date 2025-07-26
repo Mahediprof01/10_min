@@ -427,7 +427,10 @@ export function CoursePageContent() {
           {/* Right Sidebar */}
           <div className="sticky relative -top-100 z-30">
             <div className="bg-white rounded-lg overflow-hidden shadow-lg border">
-              <CourseCarousel />
+              <CourseCarousel 
+                previewGallery={getPreviewGallery} 
+                thumbnail={getThumbnail}
+              />
 
               {/* Price and Enrollment Section */}
               <div className="p-4">
