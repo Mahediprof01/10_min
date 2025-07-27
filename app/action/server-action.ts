@@ -13,14 +13,6 @@ export async function fetchCourseData(language: 'en' | 'bn' = LANGUAGE_OPTIONS.E
     const url = new URL(API_PATHS.IELTS_COURSE)
     url.searchParams.append('lang', language)
 
-    console.log('🚀 API Request:', {
-      url: url.toString(),
-      language,
-      headers: {
-        [API_HEADERS.SOURCE_PLATFORM]: 'web',
-        [API_HEADERS.ACCEPT]: 'application/json',
-      }
-    })
 
     const response = await fetch(url.toString(), {
       method: 'GET',
@@ -35,13 +27,6 @@ export async function fetchCourseData(language: 'en' | 'bn' = LANGUAGE_OPTIONS.E
       },
     })
 
-    console.log('📡 API Response Status:', {
-      status: response.status,
-      statusText: response.statusText,
-      ok: response.ok,
-      headers: Object.fromEntries(response.headers.entries())
-    })
-
     if (!response.ok) {
       console.error('❌ API Response Failed:', response.status, response.statusText)
       throw new ApiError(
@@ -53,13 +38,6 @@ export async function fetchCourseData(language: 'en' | 'bn' = LANGUAGE_OPTIONS.E
 
     const apiResponse: ApiResponse<CourseData> = await response.json()
 
-    console.log('📦 API Response Data:', {
-      code: apiResponse.code,
-      dataKeys: apiResponse.data ? Object.keys(apiResponse.data) : 'No data',
-      sectionsCount: apiResponse.data?.sections?.length || 0,
-      mediaCount: apiResponse.data?.media?.length || 0,
-      checklistCount: apiResponse.data?.checklist?.length || 0
-    })
 
     if (apiResponse.code !== 200) {
       console.error('❌ API Error Code:', apiResponse.code)
@@ -70,13 +48,6 @@ export async function fetchCourseData(language: 'en' | 'bn' = LANGUAGE_OPTIONS.E
       )
     }
 
-    console.log('✅ Course Data Fetched Successfully:', {
-      title: apiResponse.data.title,
-      slug: apiResponse.data.slug,
-      sectionsCount: apiResponse.data.sections.length,
-      mediaCount: apiResponse.data.media.length,
-      checklistCount: apiResponse.data.checklist.length
-    })
 
     return apiResponse.data
   } catch (error) {

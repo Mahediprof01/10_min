@@ -337,37 +337,6 @@ export function CoursePageContent() {
                 </div>
               </section>
             )}
-
-            {/* Content preview */}
-            {/* <section id="content-preview">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Content preview</h2>
-              <Accordion type="single" collapsible className="space-y-2">
-                {courseData?.sections?.filter(section => section.name || section.description).map((section, index) => (
-                  <AccordionItem key={section.type || `section-${index}`} value={`section-${index}`} className="border-0">
-                    <AccordionTrigger className="flex items-center justify-between w-full p-4 bg-gray-50 hover:bg-gray-100 rounded-lg">
-                      <span className="font-medium">{section.name || `Section ${index + 1}`}</span>
-                    </AccordionTrigger>
-                    <AccordionContent className="p-4 border-l-2 border-gray-200 ml-4">
-                      <div 
-                        className="text-gray-600"
-                        dangerouslySetInnerHTML={{ __html: section.description || `${section.type} section content` }}
-                      />
-                    </AccordionContent>
-                  </AccordionItem>
-                )) || (
-                  // Fallback content if no sections available
-                  <AccordionItem value="fallback" className="border-0">
-                    <AccordionTrigger className="flex items-center justify-between w-full p-4 bg-gray-50 hover:bg-gray-100 rounded-lg">
-                      <span className="font-medium">Course Content</span>
-                    </AccordionTrigger>
-                    <AccordionContent className="p-4 border-l-2 border-gray-200 ml-4">
-                      <p className="text-gray-600">Course content will be loaded dynamically</p>
-                    </AccordionContent>
-                  </AccordionItem>
-                )}
-              </Accordion>
-            </section> */}
-
            
             {/* Course Exclusive Feature */}
             {hasFeatureExplanations && getFormattedFeatureExplanations.length > 0 && (
@@ -409,7 +378,6 @@ export function CoursePageContent() {
                 </div>
               </section>
             )}
-
 
              {/* Course details */}
              {hasAbout && aboutItems.length > 0 && (

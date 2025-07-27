@@ -14,12 +14,6 @@ export function CourseDataProvider({
 }) {
   const { fetchCourseData, isLoading, error, courseData } = useCourse()
 
-  console.log('🎯 CourseDataProvider: Component state', {
-    hasData: !!courseData,
-    isLoading,
-    hasError: !!error,
-    initialLanguage
-  })
 
   useEffect(() => {
     console.log('🎯 CourseDataProvider: useEffect triggered', {
