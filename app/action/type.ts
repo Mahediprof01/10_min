@@ -90,7 +90,8 @@ export interface GroupJoinValue {
   description: string
   description_color: string
   id: string
-  thuumbnail: string
+  thumbnail: string
+  thuumbnail?: string  // Keeping for backward compatibility
   title: string
   title_color: string
   top_left_icon_img: string

@@ -177,7 +177,7 @@ export function CoursePageContent() {
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">Course instructor</h2>
                 <Card className="border-0 shadow-sm rounded-lg border ">
                   <CardContent className="p-6">
-                    <div className="flex items-start space-x-4">
+                    <div className="flex items-center space-x-4">
                       <Avatar className="h-16 w-16">
                         <AvatarImage 
                           src={instructorInfo.image}
@@ -253,46 +253,57 @@ export function CoursePageContent() {
 
             {/* Free PDF Section */}
             {hasGroupJoinEngagement && getFormattedGroupJoinEngagement.length > 0 && (
-              <Card className="bg-gradient-to-r from-gray-900 to-gray-800 text-white border-0">
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-4">
-                      <div className="bg-orange-400 text-black p-3 rounded-full">
-                        <Download className="h-6 w-6" />
-                      </div>
-                      <div>
-                        <h4 className="font-bold text-xl mb-1" style={{ color: getFormattedGroupJoinEngagement[0]?.titleColor || '#ffffff' }}>
-                          {getFormattedGroupJoinEngagement[0]?.title || 'Free PDF'}
-                        </h4>
-                        <p className="text-sm" style={{ color: getFormattedGroupJoinEngagement[0]?.descriptionColor || '#d1d5db' }}>
-                          {getFormattedGroupJoinEngagement[0]?.description || 'Download free PDF resource'}
-                        </p>
-                        <a href={getFormattedGroupJoinEngagement[0]?.cta.clicked_url} target="_blank" rel="noopener noreferrer">
-                          <Button className="bg-green-600 hover:bg-green-700 text-white mt-3">
-                            {getFormattedGroupJoinEngagement[0]?.cta.text || 'ফ্রি PDF Download করুন'}
-                          </Button>
-                        </a>
+              <Card className="bg-gradient-to-r from-[#001529] to-[#003152] text-white border-0 overflow-hidden h-[340px]">
+                <CardContent className="p-8 h-full">
+                  <div className="flex gap-8 h-full">
+                    {/* Left Column */}
+                    <div className="flex-1">
+                      <div className="flex flex-col space-y-4">
+                        <div className="pb-2">
+                          <Image
+                            src="/images/pdflogo.jpeg"
+                            alt="PDF Logo"
+                            width={190}
+                            height={40}
+                            priority
+                          />
+                        </div>
+                        <div className="space-y-4">
+                          <h4 className="font-bold text-3xl leading-tight" style={{ color: getFormattedGroupJoinEngagement[0]?.titleColor || '#ffffff' }}>
+                            {getFormattedGroupJoinEngagement[0]?.title || 'IELTS Confirm 7+ Score (Guideline)'}
+                          </h4>
+                          <p className="text-lg pb-4" style={{ color: getFormattedGroupJoinEngagement[0]?.descriptionColor || '#94A3B8' }}>
+                            {getFormattedGroupJoinEngagement[0]?.description || 'IELTS ভালো score করার সেরা Strategies জানুন সেরাদের গাইডলাইনে ।'}
+                          </p>
+                          <a href={getFormattedGroupJoinEngagement[0]?.cta.clicked_url} target="_blank" rel="noopener noreferrer">
+                            <Button className="bg-[#00A651] hover:bg-[#008C44] text-white px-8 py-3 text-base font-medium">
+                              {getFormattedGroupJoinEngagement[0]?.cta.text || 'ফ্রি PDF Download করুন'}
+                            </Button>
+                          </a>
+                        </div>
                       </div>
                     </div>
-                    <div className="hidden md:block">
+
+                    {/* Right Column */}
+                    <div className="w-[300px] flex items-center">
                       {getFormattedGroupJoinEngagement[0]?.thumbnail ? (
-                        <div className="relative w-[180px] h-[120px]">
+                        <div className="relative w-full h-[220px]">
                           <Image
                             src={getFormattedGroupJoinEngagement[0].thumbnail}
                             alt={getFormattedGroupJoinEngagement[0].title}
                             fill
-                            className="object-cover rounded"
+                            className="object-cover rounded-lg"
                           />
                         </div>
                       ) : (
-                        <div className="grid grid-cols-3 gap-1">
+                        <div className="grid grid-cols-3 gap-2 w-full">
                           {Array.from({ length: 15 }, (_, i) => (
-                            <div key={i} className="w-12 h-12 relative">
+                            <div key={i} className="relative aspect-square">
                               <Image
                                 src="/placeholder-user.jpg"
-                                alt={`Student ${i + 1}`}
+                                alt={`IELTS Expert ${i + 1}`}
                                 fill
-                                className="object-cover rounded"
+                                className="object-cover rounded-md"
                               />
                             </div>
                           ))}
@@ -457,7 +468,7 @@ export function CoursePageContent() {
 
           {/* Right Sidebar */}
           <div className="sticky relative -top-100 z-30">
-            <div className="bg-white rounded-lg overflow-hidden shadow-lg border">
+            <div className="bg-white rounded-lg overflow-hidden shadow-lg border w-[430px]">
               <CourseCarousel 
                 previewGallery={getPreviewGallery} 
                 thumbnail={getThumbnail}
@@ -607,4 +618,4 @@ export function CoursePageContent() {
       </footer>
     </div>
   )
-} 
+}

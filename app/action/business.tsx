@@ -280,7 +280,7 @@ export function useCourseGroupJoinEngagementLogic() {
       description: engagement.description,
       titleColor: engagement.title_color,
       descriptionColor: engagement.description_color,
-      thumbnail: engagement.thuumbnail,
+      thumbnail: engagement.thumbnail || engagement.thuumbnail,  // Handle both correct and legacy spelling
       topLeftIconImg: engagement.top_left_icon_img,
       background: engagement.background,
       cta: engagement.cta,
