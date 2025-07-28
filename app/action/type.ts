@@ -131,20 +131,15 @@ export interface TestimonialValue {
   video_url: string
 }
 
-export interface FaqValue {
-  answer: string
-  id: string
-  question: string
-}
 
 // Section Types
 export interface Section {
-  type: 'bundle_items' | 'offers' | 'instructors' | 'features' | 'group_join_engagement' | 'pointers' | 'content_preview' | 'about' | 'feature_explanations' | 'free_items' | 'certificate' | 'bundle_certificate' | 'testimonials' | 'requirements' | 'how_to_pay' | 'faq'
+  type: 'bundle_items' | 'offers' | 'instructors' | 'features' | 'group_join_engagement' | 'pointers' | 'content_preview' | 'about' | 'feature_explanations' | 'free_items' | 'certificate' | 'bundle_certificate' | 'testimonials' | 'requirements' | 'how_to_pay'
   name: string
   description: string
   bg_color: string
   order_idx: number
-  values: (OfferValue | InstructorValue | FeatureValue | GroupJoinValue | PointerValue | AboutValue | FeatureExplanationValue | TestimonialValue | FaqValue)[]
+  values: (OfferValue | InstructorValue | FeatureValue | GroupJoinValue | PointerValue | AboutValue | FeatureExplanationValue | TestimonialValue)[]
 }
 
 // Old Info Types

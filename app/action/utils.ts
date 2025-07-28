@@ -60,15 +60,6 @@ export function getCourseTestimonials(sections: CourseData['sections']) {
   return testimonialsSection?.values || []
 }
 
-/**
- * Gets course FAQs from sections
- * @param sections - Course sections array
- * @returns FaqValue[]
- */
-export function getCourseFaqs(sections: CourseData['sections']) {
-  const faqSection = sections.find(section => section.type === 'faq')
-  return faqSection?.values || []
-}
 
 /**
  * Gets course feature explanations from sections

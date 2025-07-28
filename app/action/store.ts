@@ -4,7 +4,7 @@ import { create } from 'zustand'
 import { devtools, persist, subscribeWithSelector } from 'zustand/middleware'
 import { useCallback } from 'react'
 import { fetchCourseDataWithRetry } from './server-action'
-import { getCourseInstructor, getCourseFeatures, getCourseLearningPoints, getCourseTestimonials, getCourseFaqs, getCourseFeatureExplanations, getCourseGroupJoinEngagement, getCourseAbout } from './utils'
+import { getCourseInstructor, getCourseFeatures, getCourseLearningPoints, getCourseTestimonials, getCourseFeatureExplanations, getCourseGroupJoinEngagement, getCourseAbout } from './utils'
 import type { CourseStoreType, CourseData } from './type'
 import { LANGUAGE_OPTIONS } from '@/constant/api-path'
 import { shallow } from 'zustand/shallow'
@@ -210,12 +210,6 @@ export const useCourseTestimonials = () =>
     return getCourseTestimonials(state.courseData.sections)
   })
 
-// Selector for course FAQs
-export const useCourseFaqs = () => 
-  useCourseStore((state) => {
-    if (!state.courseData) return EMPTY_ARRAY
-    return getCourseFaqs(state.courseData.sections)
-  })
 
 // Selector for course feature explanations
 export const useCourseFeatureExplanations = () => 

@@ -1,26 +1,19 @@
 'use client'
 import { useCourseBusinessLogic } from "@/app/action/business"
-import { Logo } from "@/components/ui/logo"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Card, CardContent } from "@/components/ui/card"
+import { Footer } from "@/components/ui/footer"
+import { Header } from "@/components/ui/header"
 import Image from "next/image"
 import { CourseCarousel } from "@/components/course/course-carousel"
 import { CourseNavigation } from "@/components/course/course-navigation"
 import {
   Star,
   Play,
-  Clock,
   Users,
   BookOpen,
-  Globe,
-  Phone,
-  ChevronDown,
-  ChevronRight,
-  Download,
-  CheckCircle,
   FileText,
-  Video,
 } from "lucide-react"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 
@@ -43,7 +36,6 @@ export function CoursePageContent() {
     { id: "course-instructor", label: "Course instructor" },
     { id: "course-layout", label: "How the course is laid out" },
     { id: "what-you-learn", label: "What you will learn by doing the course" },
-    { id: "content-preview", label: "Content preview" },
     { id: "course-features", label: "Course Exclusive Feature" },
     { id: "course-details", label: "Course details" }
   ]
@@ -85,59 +77,7 @@ export function CoursePageContent() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Header */}
-      <header className="bg-white border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="flex items-center justify-between h-16">
-            <Image 
-              src="/10mslogo-svg.svg" 
-              alt="10 Minute School" 
-              width={120} 
-              height={32} 
-              priority 
-              className="h-8 w-auto"
-            />
-            <nav className="hidden lg:flex items-center space-x-8 text-sm">
-              <div className="flex items-center space-x-1 cursor-pointer hover:text-gray-600">
-                <span>Class 6-12</span>
-                <ChevronDown className="h-4 w-4 ml-0.5" />
-              </div>
-              <div className="flex items-center space-x-1 cursor-pointer hover:text-gray-600">
-                <span>Skills</span>
-                <ChevronDown className="h-4 w-4 ml-0.5" />
-              </div>
-              <span className="cursor-pointer hover:text-gray-600">Admission</span>
-              <div className="flex items-center space-x-1 cursor-pointer hover:text-gray-600">
-                <span>Online Batch</span>
-                <ChevronDown className="h-4 w-4 ml-0.5" />
-              </div>
-              <div className="flex items-center space-x-1 cursor-pointer hover:text-gray-600">
-                <Globe className="h-4 w-4" />
-                <span>English Centre</span>
-                <ChevronDown className="h-4 w-4 ml-0.5" />
-              </div>
-              <div className="flex items-center space-x-1 cursor-pointer hover:text-gray-600">
-                <span>More</span>
-                <ChevronDown className="h-4 w-4 ml-0.5" />
-              </div>
-            </nav>
-            {/* Language Switcher */}
-            <div className="flex items-center space-x-1.5 border rounded-md px-2.5 py-1.5 cursor-pointer hover:bg-gray-50">
-                <Globe className="h-4 w-4" />
-                <span className="text-sm">EN</span>
-                <ChevronDown className="h-3 w-3" />
-              </div>
-            <div className="hidden lg:flex items-center space-x-8">
-              <div className="flex items-center space-x-1.5 text-sm">
-                <Phone className="h-4 w-4" />
-                <span>16910</span>
-              </div>
-              
-              <Button className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-md text-sm font-medium">লগ-ইন</Button>
-            </div>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       {/* Hero Section */}
       <section className="bg-slate-900 text-white py-12">
@@ -164,8 +104,10 @@ export function CoursePageContent() {
         </div>
       </section>
 
-      {/* Navigation Tabs */}
-      <CourseNavigation sections={sections} />
+      {/* Navigation Tabs - Hidden on mobile */}
+      <div className="hidden md:block">
+        <CourseNavigation sections={sections} />
+      </div>
 
       <main className="max-w-7xl mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -544,85 +486,7 @@ export function CoursePageContent() {
 
       </main>
 
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white mt-16">
-        <div className="max-w-7xl mx-auto px-4 py-12">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div>
-              <Logo className="mb-4" />
-              <p className="text-gray-400 text-sm">দেশের সবচেয়ে বড় অনলাইন শিক্ষা প্ল্যাটফর্ম</p>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4">Company</h3>
-              <ul className="space-y-2 text-sm text-gray-400">
-                <li>
-                  <a href="#" className="hover:text-white">
-                    About us
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Refund policy
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Privacy policy
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Terms & condition
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4">Others</h3>
-              <ul className="space-y-2 text-sm text-gray-400">
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Blog
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Book Store
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Free Notes & Guides
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Job Preparation
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4">Keep up with us</h3>
-              <div className="flex space-x-4">
-                <a href="#" className="text-gray-400 hover:text-white">
-                  <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z" />
-                  </svg>
-                </a>
-                <a href="#" className="text-gray-400 hover:text-white">
-                  <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z" />
-                  </svg>
-                </a>
-              </div>
-            </div>
-          </div>
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
-            <p>&copy; 2024 10 Minute School. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }

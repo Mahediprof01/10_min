@@ -1,8 +1,8 @@
 'use client'
 
 import React, { useEffect, useState, useCallback, useMemo } from 'react'
-import { useCourse, useCourseInstructor, useCourseFeatures, useCourseLearningPoints, useCourseTestimonials, useCourseFaqs, useCourseFeatureExplanations, useCourseGroupJoinEngagement, useCourseAbout, useCourseChecklist, useCourseChecklistVisible, useCourseMedia, useCourseVideoMedia, useCourseImageMedia } from './store'
-import type { CourseData, InstructorValue, FeatureValue, PointerValue, TestimonialValue, FaqValue, FeatureExplanationValue, GroupJoinValue, AboutValue, Checklist, Medium } from './type'
+import { useCourse, useCourseInstructor, useCourseFeatures, useCourseLearningPoints, useCourseTestimonials, useCourseFeatureExplanations, useCourseGroupJoinEngagement, useCourseAbout, useCourseChecklist, useCourseChecklistVisible, useCourseMedia, useCourseVideoMedia, useCourseImageMedia } from './store'
+import type { CourseData, InstructorValue, FeatureValue, PointerValue, TestimonialValue, FeatureExplanationValue, GroupJoinValue, AboutValue, Checklist, Medium } from './type'
 
 // Course Data Provider Component
 export function CourseDataProvider({ 
@@ -205,37 +205,6 @@ export function useCourseTestimonialsLogic() {
   }
 }
 
-// Course FAQs Business Logic
-export function useCourseFaqsLogic() {
-  const faqs = useCourseFaqs() as FaqValue[]
-  const [expandedFaq, setExpandedFaq] = useState<string | null>(null)
-
-  const toggleFaq = useCallback((faqId: string) => {
-    setExpandedFaq(current => current === faqId ? null : faqId)
-  }, [])
-
-  const getFormattedFaqs = useMemo(() => {
-    return faqs.map(faq => ({
-      id: faq.id,
-      question: faq.question,
-      answer: faq.answer,
-      isExpanded: expandedFaq === faq.id,
-    }))
-  }, [faqs, expandedFaq])
-
-  const hasFaqs = useMemo(() => faqs.length > 0, [faqs.length])
-  const faqsCount = useMemo(() => faqs.length, [faqs.length])
-
-  return {
-    faqs,
-    getFormattedFaqs,
-    toggleFaq,
-    expandedFaq,
-    setExpandedFaq,
-    hasFaqs,
-    faqsCount,
-  }
-}
 
 // Course Feature Explanations Business Logic
 export function useCourseFeatureExplanationsLogic() {
@@ -482,7 +451,6 @@ export function useCourseBusinessLogic() {
   const features = useCourseFeaturesLogic()
   const learningPoints = useCourseLearningPointsLogic()
   const testimonials = useCourseTestimonialsLogic()
-  const faqs = useCourseFaqsLogic()
   const featureExplanations = useCourseFeatureExplanationsLogic()
   const groupJoinEngagement = useCourseGroupJoinEngagementLogic()
   const about = useCourseAboutLogic()
@@ -497,7 +465,6 @@ export function useCourseBusinessLogic() {
     features,
     learningPoints,
     testimonials,
-    faqs,
     featureExplanations,
     groupJoinEngagement,
     about,
