@@ -1,13 +1,11 @@
 'use client'
 
 import { create } from 'zustand'
-import { devtools, persist, subscribeWithSelector } from 'zustand/middleware'
-import { useCallback } from 'react'
+import { devtools, subscribeWithSelector } from 'zustand/middleware'
 import { fetchCourseDataWithRetry } from './server-action'
 import { getCourseInstructor, getCourseFeatures, getCourseLearningPoints, getCourseTestimonials, getCourseFeatureExplanations, getCourseGroupJoinEngagement, getCourseAbout } from './utils'
 import type { CourseStoreType, CourseData } from './type'
 import { LANGUAGE_OPTIONS } from '@/constant/api-path'
-import { shallow } from 'zustand/shallow'
 
 // Create empty arrays as constants to avoid creating new references
 const EMPTY_ARRAY: never[] = []
@@ -32,27 +30,17 @@ let lastMediaData: any[] | null = null
 export const useCourseStore = create<CourseStoreType>()(
   devtools(
     subscribeWithSelector(
-      persist(
-        (set, get) => ({
-          ...initialState,
+      (set, get) => ({
+        ...initialState,
 
-                  // Fetch course data
+        // Fetch course data
         fetchCourseData: async (language?: 'en' | 'bn') => {
           const currentLanguage = language || get().language
           
-          console.log('🏪 Store: Starting course data fetch...', { language: currentLanguage })
           set({ isLoading: true, error: null }, false, 'fetchCourseData/start')
 
           try {
             const courseData = await fetchCourseDataWithRetry(currentLanguage)
-            
-            console.log('🏪 Store: Course data received successfully', {
-              title: courseData.title,
-              slug: courseData.slug,
-              sectionsCount: courseData.sections.length,
-              mediaCount: courseData.media.length,
-              checklistCount: courseData.checklist.length
-            })
             
             // Reset cached arrays when new data is loaded
             cachedVisibleChecklist = EMPTY_ARRAY
@@ -61,8 +49,6 @@ export const useCourseStore = create<CourseStoreType>()(
             cachedImageMedia = EMPTY_ARRAY
             lastChecklistData = null
             lastMediaData = null
-            
-            console.log('🏪 Store: Cache cleared, storing new data...')
             
             set(
               { 
@@ -74,17 +60,10 @@ export const useCourseStore = create<CourseStoreType>()(
               false,
               'fetchCourseData/success'
             )
-            
-            console.log('🏪 Store: Data stored successfully!')
           } catch (error) {
             const errorMessage = error instanceof Error 
               ? error.message 
               : 'Failed to fetch course data'
-            
-            console.error('🏪 Store: Error storing course data:', {
-              error: errorMessage,
-              errorType: error instanceof Error ? error.constructor.name : typeof error
-            })
             
             set(
               { 
@@ -98,42 +77,33 @@ export const useCourseStore = create<CourseStoreType>()(
           }
         },
 
-          // Set language preference
-          setLanguage: (language: 'en' | 'bn') => {
-            set({ language }, false, 'setLanguage')
-            // Optionally refetch data with new language
-            if (get().courseData) {
-              get().fetchCourseData(language)
-            }
-          },
+        // Set language preference
+        setLanguage: (language: 'en' | 'bn') => {
+          set({ language }, false, 'setLanguage')
+          // Optionally refetch data with new language
+          if (get().courseData) {
+            get().fetchCourseData(language)
+          }
+        },
 
-          // Clear error
-          clearError: () => {
-            set({ error: null }, false, 'clearError')
-          },
+        // Clear error
+        clearError: () => {
+          set({ error: null }, false, 'clearError')
+        },
 
-          // Reset store to initial state
-          reset: () => {
-            // Reset cached arrays
-            cachedVisibleChecklist = EMPTY_ARRAY
-            cachedHiddenChecklist = EMPTY_ARRAY
-            cachedVideoMedia = EMPTY_ARRAY
-            cachedImageMedia = EMPTY_ARRAY
-            lastChecklistData = null
-            lastMediaData = null
-            
-            set(initialState, false, 'reset')
-          },
-        }),
-        {
-          name: 'course-store', // unique name for localStorage key
-          partialize: (state) => ({
-            language: state.language,
-            courseData: state.courseData,
-          }), // Only persist certain fields
-          version: 1, // version for data migration
-        }
-      )
+        // Reset store to initial state
+        reset: () => {
+          // Reset cached arrays
+          cachedVisibleChecklist = EMPTY_ARRAY
+          cachedHiddenChecklist = EMPTY_ARRAY
+          cachedVideoMedia = EMPTY_ARRAY
+          cachedImageMedia = EMPTY_ARRAY
+          lastChecklistData = null
+          lastMediaData = null
+          
+          set(initialState, false, 'reset')
+        },
+      })
     ),
     {
       name: 'course-store', // DevTools name

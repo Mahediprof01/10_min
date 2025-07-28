@@ -16,28 +16,18 @@ export function CourseDataProvider({
 
 
   useEffect(() => {
-    console.log('🎯 CourseDataProvider: useEffect triggered', {
-      hasData: !!courseData,
-      shouldFetch: !courseData
-    })
-    
     if (!courseData) {
-      console.log('🎯 CourseDataProvider: Fetching course data...')
       fetchCourseData(initialLanguage)
     }
   }, [courseData, fetchCourseData, initialLanguage])
 
   if (isLoading) {
-    console.log('🎯 CourseDataProvider: Showing loading state')
     return <CourseLoadingState />
   }
 
   if (error) {
-    console.log('🎯 CourseDataProvider: Showing error state', { error })
     return <CourseErrorState error={error} onRetry={() => fetchCourseData(initialLanguage)} />
   }
-
-  console.log('🎯 CourseDataProvider: Rendering children with data')
   return <>{children}</>
 }
 
@@ -414,9 +404,9 @@ export function useCourseSeoLogic() {
 // Course Price Business Logic (Mock - since pricing isn't in the API response)
 export function useCoursePriceLogic() {
   const [price] = useState({
-    current: 3850,
-    original: 5000,
-    discount: 1150,
+    current: 1000,
+    original: 1500,
+    discount: 500,
     currency: '৳',
   })
 
