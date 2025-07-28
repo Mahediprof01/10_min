@@ -8,7 +8,10 @@ const inter = Inter({ subsets: ["latin"] })
 export const metadata: Metadata = {
   title: "10 Minute School - Learn Anytime, Anywhere",
   description: "Bangladesh's largest online learning platform",
-    generator: 'v0.dev'
+  generator: 'v0.dev',
+  icons: {
+    icon: '/images/favicon.png',
+  }
 }
 
 export default function RootLayout({
