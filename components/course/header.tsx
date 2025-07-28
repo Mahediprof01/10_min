@@ -93,7 +93,7 @@ export function Header() {
           <div className="fixed inset-0 bg-black bg-opacity-50" onClick={toggleMobileMenu} />
           
           {/* Sidebar */}
-          <div className="fixed top-0 left-0 h-full w-80 bg-white shadow-xl transform transition-transform duration-300 ease-in-out">
+          <div className="fixed top-0 left-0 h-full w-full max-w-80 bg-white shadow-xl transform transition-transform duration-300 ease-in-out">
             <div className="flex items-center justify-between p-4 border-b">
               <Image 
                 src="/10mslogo-svg.svg" 

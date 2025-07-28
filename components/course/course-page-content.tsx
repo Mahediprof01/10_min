@@ -153,7 +153,7 @@ export function CoursePageContent() {
               discountAmount={discountAmount}
               ctaText={courseData?.cta_text?.name || 'Enroll'}
               checklist={checklistData}
-              className="w-[430px]"
+              className="w-full max-w-[430px]"
             />
           </div>
         </div>

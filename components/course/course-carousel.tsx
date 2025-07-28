@@ -175,7 +175,7 @@ export function CourseCarousel({ previewGallery = [], thumbnail }: CourseCarouse
 
       {/* Thumbnail Strip */}
       {mediaItems.length > 1 && (
-        <div className="flex gap-2 p-2 bg-white border-b overflow-x-auto scrollbar-hide">
+        <div className="flex gap-2 p-2 bg-white border-b overflow-hidden">
           {mediaItems.map((media, index) => (
             <button
               key={`thumb-${media.name}-${index}`}
