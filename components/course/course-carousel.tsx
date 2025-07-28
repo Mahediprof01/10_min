@@ -33,14 +33,14 @@ export function CourseCarousel({ previewGallery = [], thumbnail }: CourseCarouse
     api.on("select", () => {
       const newIndex = api.selectedScrollSnap()
       setActiveMedia(newIndex)
-      // Stop video if navigating away from a playing video
+      
       if (playingVideo !== null && playingVideo !== newIndex) {
         setPlayingVideo(null)
       }
     })
   }, [api, playingVideo])
 
-  // Use preview gallery if available, otherwise fallback to thumbnail, or default placeholder
+  
   const mediaItems = previewGallery.length > 0 
     ? previewGallery 
     : thumbnail 
@@ -54,20 +54,20 @@ export function CourseCarousel({ previewGallery = [], thumbnail }: CourseCarouse
     }
     
     if (media.resource_type === 'video') {
-      // Toggle video playback
+      
       if (playingVideo === index) {
-        setPlayingVideo(null) // Stop video if already playing
+        setPlayingVideo(null) 
       } else {
-        setPlayingVideo(index) // Start video
+        setPlayingVideo(index) 
       }
     } else {
-      // For images, stop any playing video
+      
       setPlayingVideo(null)
     }
   }
 
   const isYouTubeVideo = (value: string) => {
-    // Check if it's a YouTube video ID (11 characters, alphanumeric and some special chars)
+    
     return value.length === 11 && /^[a-zA-Z0-9_-]+$/.test(value)
   }
 
@@ -122,11 +122,11 @@ export function CourseCarousel({ previewGallery = [], thumbnail }: CourseCarouse
                       src={media.resource_value}
                       onEnded={() => setPlayingVideo(null)}
                       onLoadedData={() => {
-                        // Auto-play after video loads
+                        
                         if (videoRef.current) {
                           videoRef.current.play().catch((error) => {
                             console.error('Autoplay failed:', error);
-                            // If autoplay fails, just keep the video ready to play manually
+                            
                           });
                         }
                       }}

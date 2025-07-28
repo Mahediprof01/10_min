@@ -17,7 +17,7 @@ export function CourseNavigation({ sections }: CourseNavigationProps) {
     setActiveTab(sectionId)
     const element = document.getElementById(sectionId)
     if (element) {
-      const offset = 100 // Account for sticky header
+      const offset = 100 
       const elementPosition = element.offsetTop - offset
       window.scrollTo({
         top: elementPosition,
